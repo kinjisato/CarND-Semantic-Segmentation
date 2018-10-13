@@ -62,20 +62,20 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     layer7_out = tf.layers.conv2d(vgg_layer7_out, num_classes, 1,
                                     strides = (1,1),
                                     padding= 'same',
-                                    kernel_initializer= tf.random_normal_initializer(stddev=0.01),
+                                    #kernel_initializer= tf.random_normal_initializer(stddev=0.01),
                                     kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
 
     # upsample
     layer4_in1 = tf.layers.conv2d_transpose(layer7_out, num_classes, 4,
                                             strides = (2,2),
                                             padding = 'same',
-                                            kernel_initializer= tf.random_normal_initializer(stddev=0.01),
+                                            #kernel_initializer= tf.random_normal_initializer(stddev=0.01),
                                             kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
     # 1x1 convolution of vgg layer 4
     layer4_in2 = tf.layers.conv2d(vgg_layer4_out, num_classes, 1,
                                     strides = (1,1),
                                     padding= 'same',
-                                    kernel_initializer= tf.random_normal_initializer(stddev=0.01),
+                                    #kernel_initializer= tf.random_normal_initializer(stddev=0.01),
                                     kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
 
     # skip connection layer 4
@@ -85,14 +85,14 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     layer3_in1 = tf.layers.conv2d_transpose(layer4_out, num_classes, 4,
                                             strides = (2,2),
                                             padding = 'same',
-                                            kernel_initializer= tf.random_normal_initializer(stddev=0.01),
+                                            #kernel_initializer= tf.random_normal_initializer(stddev=0.01),
                                             kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
 
     # 1x1 convolution of vgg layer 3
     layer3_in2 = tf.layers.conv2d(vgg_layer3_out, num_classes, 1,
                                     strides = (1,1),
                                     padding= 'same',
-                                    kernel_initializer= tf.random_normal_initializer(stddev=0.01),
+                                    #kernel_initializer= tf.random_normal_initializer(stddev=0.01),
                                     kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
 
     # skip connection layer 3
@@ -102,10 +102,10 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     output = tf.layers.conv2d_transpose(layer3_out, num_classes, 16,
                                             strides = (8,8),
                                             padding = 'same',
-                                            kernel_initializer= tf.random_normal_initializer(stddev=0.01),
+                                            #kernel_initializer= tf.random_normal_initializer(stddev=0.01),
                                             kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
 
-    #tf.Print(output, [tf.shape(output)[1:3]])
+    tf.Print(output, [tf.shape(output)[1:3]])
 
     return output
 tests.test_layers(layers)
@@ -164,8 +164,8 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
                                     input_image: image,
                                     correct_label: label,
                                     # placeholder
-                                    keep_prob: 0.5,
-                                    learning_rate: 0.001
+                                    keep_prob: 0.9,
+                                    learning_rate: 0.0001
                                 })
             print("Loss: = {:.3f}".format(loss))
 tests.test_train_nn(train_nn)
@@ -174,12 +174,7 @@ tests.test_train_nn(train_nn)
 def run():
     num_classes = 2
     image_shape = (160, 576)
-
-    # For local machine
     data_dir = './data'
-    # For udacity workspace
-    #data_dir = '/data'
-
     runs_dir = './runs'
     tests.test_for_kitti_dataset(data_dir)
 
@@ -210,8 +205,8 @@ def run():
         logits, train_op, cross_entropy_loss = optimize(nn_last_layer, correct_label, learning_rate, num_classes)
 
         # TODO: Train NN using the train_nn function
-        epochs = 50
-        batch_size = 5
+        epochs = 5
+        batch_size = 2
 
         train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image,
              correct_label, keep_prob, learning_rate)
