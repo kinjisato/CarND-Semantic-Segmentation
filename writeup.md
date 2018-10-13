@@ -6,12 +6,12 @@
 [image1]: ./rubric/rubric01.png
 [image2]: ./rubric/rubric02.png
 [image3]: ./rubric/FCN.png
-[image4]: ./runs/um_000000.png
-[image5]: ./runs/um_000095.png
-[image6]: ./runs/umm_000000.png
-[image7]: ./runs/umm_000093.png
-[image8]: ./runs/uu_000000.png
-[image9]: ./runs/uu_000099.png
+[image4]: ./runs/1539368453.6711168/um_000000.png
+[image5]: ./runs/1539368453.6711168/um_000095.png
+[image6]: ./runs/1539368453.6711168/umm_000000.png
+[image7]: ./runs/1539368453.6711168/umm_000093.png
+[image8]: ./runs/1539368453.6711168/uu_000000.png
+[image9]: ./runs/1539368453.6711168/uu_000099.png
 
 [video1]: ./runs/
 
